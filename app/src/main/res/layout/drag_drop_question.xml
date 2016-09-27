@@ -16,5 +16,65 @@
         android:textColor="@color/bg_comments"
         android:textAppearance="?android:textAppearanceLarge"/>
 
+    <LinearLayout
+        android:id="@+id/ll_question_content_container"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/tv_question_type_text"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/grey_stroke_box"
+        >
+        <com.padc.interactive_training.components.MMTextView
+            android:id="@+id/tv_questionn_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Define Target Audience"
+            android:textAlignment="center"
+            android:background="@drawable/orange_box"/>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_answer_content_container_one"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/ll_question_content_container"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/grey_stroke_box">
+
+    </LinearLayout>
+    <com.padc.interactive_training.components.MMTextView
+        android:id="@+id/tv_answer_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_answer_content_container_one"
+        android:layout_marginTop="@dimen/margin_large"
+        android:text="I have this"/>
+    <LinearLayout
+        android:id="@+id/ll_answer_content_container_two"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/ll_question_content_container"
+        android:layout_marginTop="@dimen/margin_xlarge"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/grey_stroke_box">
+
+    </LinearLayout>
+    <com.padc.interactive_training.components.MMTextView
+        android:id="@+id/tv_answer_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_answer_content_container_two"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_alignParentRight="true"
+        android:text="I dont't have this"/>
+
 
 </RelativeLayout>

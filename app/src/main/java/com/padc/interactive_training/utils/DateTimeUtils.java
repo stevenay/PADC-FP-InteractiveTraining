@@ -18,8 +18,8 @@ public class DateTimeUtils {
     *
     * =>To change from string date in any java supported date format to object date
     * Use two arguments method,
-    *   - 1st arg for date format in string
-    *   - 2nd arg for date input in string
+    *   - 1st arg for date or date/time format in string
+    *   - 2nd arg for date or date/time input in string
     *
     *
     * Contribution for improvement of this utility will be accepted with proper working.
@@ -30,6 +30,10 @@ public class DateTimeUtils {
 
     public static Date parseStringToDate(String strDateToParse) {
         return parseStringToDate("yyyy-MM-dd", strDateToParse);
+    }
+
+    public static Date parseStringToDateTime(String strDateTimeToparse){
+        return parseStringToDate("yyyy/MM/dd HH:mm:ss", strDateTimeToparse);
     }
 
     public static Date parseStringToDate(String strInputDF, String strDateToParse) { // DF = Date Format

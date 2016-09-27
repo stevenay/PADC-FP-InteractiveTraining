@@ -26,7 +26,6 @@
         <activity
             android:name=".activities.ArticlesActivity"
             android:label="@string/title_activity_articles"
-            android:parentActivityName=".activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

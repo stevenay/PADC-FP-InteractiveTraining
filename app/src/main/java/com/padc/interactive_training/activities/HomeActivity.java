@@ -276,6 +276,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_my_course:
                 navigateToMyCourseListFragment();
                 return true;
+            case R.id.nav_my_test:
+                navigateToMyTest();
+                return true;
             case R.id.nav_notifications:
                 return true;
             case R.id.nav_pin_cards:
@@ -289,6 +292,7 @@ public class HomeActivity extends AppCompatActivity
 
         return false;
     }
+
 
     //region Navigation
     private void navigateToMyCourseListFragment() {
@@ -313,6 +317,11 @@ public class HomeActivity extends AppCompatActivity
 
     private void navigateToArticle() {
         Intent intent = ArticlesActivity.newIntent();
+        startActivity(intent);
+    }
+
+    private void navigateToMyTest() {
+        Intent intent = TestActivity.newIntent();
         startActivity(intent);
     }
 

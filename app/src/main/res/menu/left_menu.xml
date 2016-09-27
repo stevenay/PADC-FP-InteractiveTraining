@@ -34,6 +34,11 @@
             android:icon="@drawable/ic_dns_24dp"
             android:title="My Courses"
             />
+        <item
+            android:id="@+id/nav_my_test"
+            android:icon="@drawable/ic_question_answer_black_24dp"
+            android:title="My Test"
+            />
 
         <item
             android:id="@+id/nav_pin_cards"

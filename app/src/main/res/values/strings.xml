@@ -76,6 +76,11 @@
     <string name="title_activity_article_detail">ArticleDetailActivity</string>
     <!-- Sample Text Finish -->
 
+    <!-- Article List start -->
+    <string name="article_list_screen_title_mm"> ေဆာင္းပါးစဥ္</string>
+    <string name="article_list_screen_title_en"> Article List</string>
+    <!-- Article List end -->
+
 
     <!-- Development Package, dir, path, notation start-->
     <string name="true_false_question_sample">Hot Diggity Dog Food\'s media agency has to spend a lot of man hours negotiating the standard media buy.</string>
