@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -49,7 +48,7 @@ public class TestActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
         }
 
-        //region object of moving implementation touch and drag Listener
+        //region object of moving implementation touch a7&nd drag Listener
         //touch and drag
         findViewById(R.id.tv_questionn_text).setOnTouchListener(new MyTouchListener());
 
@@ -57,6 +56,7 @@ public class TestActivity extends AppCompatActivity {
         findViewById(R.id.ll_question_content_container).setOnDragListener(new MyDragListener());
         findViewById(R.id.ll_answer_content_container_one).setOnDragListener(new MyDragListener());
         findViewById(R.id.ll_answer_content_container_two).setOnDragListener(new MyDragListener());
+        findViewById(R.id.rl_drag_and_drop_main_container).setOnDragListener(new MyDragListener());
         //endregion
 
     }
@@ -68,7 +68,7 @@ public class TestActivity extends AppCompatActivity {
                 ClipData data = ClipData.newPlainText("", "");
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDrag(data, shadowBuilder, view, 0);
-                view.setVisibility(View.INVISIBLE);
+                //view.setVisibility(View.INVISIBLE);
                 return true;
             } else {
                 return false;
@@ -92,28 +92,39 @@ public class TestActivity extends AppCompatActivity {
                     // do nothing
                     break;
                 case DragEvent.ACTION_DRAG_ENTERED:
-                    v.setBackgroundDrawable(enterShape);
+                    if (v.getId() != R.id.rl_drag_and_drop_main_container) { // for containers except rl_drag_and_drop_main_container
+                        v.setBackgroundDrawable(enterShape);
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
                     v.setBackgroundDrawable(normalShape);
                     break;
                 case DragEvent.ACTION_DROP:
                     // Dropped, reassign View to ViewGroup
+
+
                     View view = (View) event.getLocalState();
                     ViewGroup owner = (ViewGroup) view.getParent();
-                    owner.removeView(view);
-                    owner.setBackgroundDrawable(normalShape);
 
-                    LinearLayout container = (LinearLayout) v;
-                    container.addView(view);
-                    view.setVisibility(View.VISIBLE);
-                    v.setBackgroundDrawable(dropShape);
 
-                    checkDropContainer(container.getId());
+                    if (v.getId() != R.id.rl_drag_and_drop_main_container) { // for containers except rl_drag_and_drop_main_container
+                        LinearLayout container = (LinearLayout) v;
+
+                        owner.removeView(view);
+                        container.addView(view);
+
+                        owner.setBackgroundDrawable(normalShape);
+                        v.setBackgroundDrawable(dropShape);
+                    } else if (v.getId() == R.id.rl_drag_and_drop_main_container) {
+                        Toast.makeText(getApplicationContext(), "Drop at the background", Toast.LENGTH_SHORT);
+                        owner.setBackgroundDrawable(dropShape);
+                    }
+                    //view.setVisibility(View.VISIBLE);
+                    checkDropContainer(v.getId());
 
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
-                    //currently no action
+                    // currently no action
                     break;
                 default:
                     break;

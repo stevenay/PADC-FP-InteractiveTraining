@@ -49,4 +49,8 @@ public class InteractiveTrainingConstants {
 
     public static final String SWITCH_TAB = "switch_tab";
     public static final String TAB_DISCUSSION = "tab_discussion";
+    public static final String API_GET_ARTICLE_LIST = "GetArticles.php";
+
+
+    public static final int ARTICLE_LIST_LOADER = 8;
 }

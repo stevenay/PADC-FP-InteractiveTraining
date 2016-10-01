@@ -1,16 +1,15 @@
 package com.padc.interactive_training.views.holders;
 
-import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.padc.interactive_training.R;
 import com.padc.interactive_training.data.vos.ArticleVO;
+import com.padc.interactive_training.utils.DateTimeUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -69,15 +68,21 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.O
     public void bindData(ArticleVO articleVO){
         mArticleVO = articleVO;
 
-        Date publishedDate = mArticleVO.getPublishedDate();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String strPublishedDate = df.format(publishedDate);
+        String publishedDate = mArticleVO.getPublishedDateTime();
+        Date covertPublishedDate = DateTimeUtils.parseStringToDateTime(publishedDate);
+        String formmatedDate = DateTimeUtils.parseDateToString(covertPublishedDate);
 
-        tvArticleTilte.setText(mArticleVO.getTitle());
-        tvPublishedDate.setText(strPublishedDate);
-        tvCategoryName.setText(mArticleVO.getCategoryName());
-        tvArticleBriefDescription.setText(mArticleVO.getBriefDescription());
-        ivArticle.setImageResource(mArticleVO.getImageURL());
+        tvArticleTilte.setText(mArticleVO.getArticleTitle());
+        tvPublishedDate.setText(formmatedDate);
+        tvCategoryName.setText("Technology");
+        tvArticleBriefDescription.setText(mArticleVO.getIntroContent());
+
+        Glide.with(ivArticle.getContext())
+                .load(mArticleVO.getImageUrl1())
+                .centerCrop()
+                .placeholder(R.drawable.misc_09_256)
+                .error(R.drawable.misc_09_256)
+                .into(ivArticle);
 
     }
 

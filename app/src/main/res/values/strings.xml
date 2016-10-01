@@ -93,4 +93,6 @@
     <!-- Development Package, dir, path, notation start-->
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <!-- Development Package, dir, path, notation finish-->
+
+    <string name="content_authority">com.padc.interactive_training</string>
 </resources>

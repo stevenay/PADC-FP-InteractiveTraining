@@ -18,10 +18,12 @@ import com.padc.interactive_training.views.holders.ArticleViewHolder;
 
 public class ArticlesActivity extends AppCompatActivity implements ArticleViewHolder.ControllerArticleItem {
 
+
     public static Intent newIntent() {
         Intent intent = new Intent(InteractiveTrainingApp.getContext(), ArticlesActivity.class);
         return intent;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,5 +78,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticleViewHo
     public void onCoverImageClick() {
         Toast.makeText(InteractiveTrainingApp.getContext(), "You tap on cover Image", Toast.LENGTH_SHORT);
     }
+
+
     //endregion
 }

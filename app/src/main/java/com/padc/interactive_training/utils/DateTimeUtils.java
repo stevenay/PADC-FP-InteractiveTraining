@@ -1,6 +1,5 @@
 package com.padc.interactive_training.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +32,7 @@ public class DateTimeUtils {
     }
 
     public static Date parseStringToDateTime(String strDateTimeToparse){
-        return parseStringToDate("yyyy/MM/dd HH:mm:ss", strDateTimeToparse);
+        return parseStringToDate("yyyy-MM-dd HH:mm:ss", strDateTimeToparse);
     }
 
     public static Date parseStringToDate(String strInputDF, String strDateToParse) { // DF = Date Format

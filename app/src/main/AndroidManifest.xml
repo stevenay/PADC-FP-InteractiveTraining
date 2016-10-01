@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.padc.interactive_training">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".InteractiveTrainingApp"
         android:allowBackup="true"
@@ -61,13 +63,20 @@
         <activity
             android:name=".activities.DiscussionDetailActivity"
             android:label="Discussion Details"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activities.RegisteredCourseDetailActivity" />
+            android:parentActivityName=".activities.RegisteredCourseDetailActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".activities.NewDiscussionActivity"
             android:label="New Discussion"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".activities.RegisteredCourseDetailActivity" />
+            android:parentActivityName=".activities.RegisteredCourseDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name=".data.persistence.CourseProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"
+            android:syncable="true" />
+
 
     </application>
 
