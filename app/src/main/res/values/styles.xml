@@ -47,8 +47,7 @@
 
     </style>
     <style name="DetailPageTitle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textColor">@color/white_full</item>
-        <item name="android:itemBackground">#01bcd5</item>
+        <item name="android:textColor">@color/accent</item>
     </style>
 
 

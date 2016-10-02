@@ -481,10 +481,10 @@ public class CoursesContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildArticleUriWithId(String aritcleId) {
+        public static Uri buildArticleUriWithId(int aritcleId) {
             //content://xyz.aungpyaephyo.padc.myanmarattractions/attractions?title="Yangon"
             return CONTENT_URI.buildUpon()
-                    .appendQueryParameter(COLUMN_ARTICLE_ID, aritcleId)
+                    .appendQueryParameter(COLUMN_ARTICLE_ID, String.valueOf(aritcleId))
                     .build();
         }
 

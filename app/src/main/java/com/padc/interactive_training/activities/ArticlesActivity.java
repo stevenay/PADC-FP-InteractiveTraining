@@ -45,7 +45,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticleViewHo
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                navigateToArticleDetailActivity();
+                //navigateToArticleDetailActivity();
             }
         });
 
@@ -55,10 +55,7 @@ public class ArticlesActivity extends AppCompatActivity implements ArticleViewHo
         }
     }
 
-    private void navigateToArticleDetailActivity(){
-        Intent intentToArticleDetailActivity = ArticleDetailActivity.newIntent();
-        startActivity(intentToArticleDetailActivity);
-    }
+
 
     private void navigateToArticleListFragment() {
         getSupportFragmentManager()
@@ -70,8 +67,9 @@ public class ArticlesActivity extends AppCompatActivity implements ArticleViewHo
     //region Article Controller Item event(s)
     @Override
     public void onTapArticle(ArticleVO article) {
-        Toast.makeText(InteractiveTrainingApp.getContext(), "You tap on article", Toast.LENGTH_SHORT);
-        navigateToArticleDetailActivity();
+        Intent intent = ArticleDetailActivity.newIntent(article.getArticleId());
+        startActivity(intent);
+
     }
 
     @Override
