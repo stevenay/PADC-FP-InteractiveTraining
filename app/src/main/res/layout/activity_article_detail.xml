@@ -13,11 +13,12 @@
         android:layout_height="256dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.padc.interactive_training.components.MMCollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            android:soundEffectsEnabled="true"
             app:collapsedTitleTextAppearance="@style/DetailPageTitle"
             app:expandedTitleTextAppearance="@style/DetailPageTitle"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -38,7 +39,7 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.padc.interactive_training.components.MMCollapsingToolbarLayout>
 
 
 
