@@ -38,6 +38,9 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.tv_article_title)
+    TextView tvArticleTitle;
+
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolBar;
 
@@ -109,6 +112,7 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         if(actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
+            actionBar.setTitle(null);
         }
 
         mArticleId = getIntent().getIntExtra(IE_ARTICLE_ID, 0);
@@ -168,7 +172,8 @@ public class ArticleDetailActivity extends AppCompatActivity implements LoaderMa
         tvSecondHeadingContent.setText(mArticle.getSecondHeadingContent());
         tvThirdHeadingContent.setText(mArticle.getThirdHeadingContent());
 
-        collapsingToolBar.setTitle(mArticle.getArticleTitle());
+        //collapsingToolBar.setTitle(mArticle.getArticleTitle());
+        tvArticleTitle.setText(mArticle.getArticleTitle());
         Glide.with(ivStockPhoto.getContext())
                 .load(mArticle.getImageUrl1())
                 .centerCrop()

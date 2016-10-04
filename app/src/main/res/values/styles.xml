@@ -48,6 +48,8 @@
     </style>
     <style name="DetailPageTitle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/accent</item>
+        <item name="android:textSize">@dimen/text_regular_3x</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 
