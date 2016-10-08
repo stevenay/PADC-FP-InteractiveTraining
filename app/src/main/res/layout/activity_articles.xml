@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/homeBackground"
+    android:fitsSystemWindows="true"
     tools:context="com.padc.interactive_training.activities.ArticlesActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -18,24 +18,51 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:title="ေဆာင္းပါးမ်ား"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <com.padc.interactive_training.components.MMTextView
+                android:id="@+id/tv_screen_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:text="ေဆာင္းပါးမ်ား"
+                android:textSize="@dimen/screen_title_size" />
+
+        </android.support.v7.widget.Toolbar>
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tl_navigations"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height"
+            android:layout_marginBottom="@dimen/margin_medium"
+            app:stl_defaultTabTextColor="@color/text_white_ish"
+            app:stl_distributeEvenly="true"
+            app:stl_indicatorColor="@color/text_white_ish"
+            app:stl_indicatorCornerRadius="1.5dp"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorThickness="2dp"
+            app:stl_underlineColor="@color/transparent" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/margin_medium_2"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_navigations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--<FrameLayout-->
+            <!--android:id="@+id/fl_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+        <!---->
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

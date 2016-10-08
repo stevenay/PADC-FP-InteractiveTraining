@@ -17,9 +17,12 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 import com.padc.interactive_training.InteractiveTrainingApp;
 import com.padc.interactive_training.R;
+import com.padc.interactive_training.data.vos.DiscussionVO;
+import com.padc.interactive_training.data.vos.TodoItemVO;
 import com.padc.interactive_training.views.holders.CourseTodoItemViewHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by NayLinAung on 9/13/2016.
@@ -28,13 +31,13 @@ public class CourseTodoAdapter extends RecyclerSwipeAdapter<CourseTodoItemViewHo
     implements CourseTodoItemViewHolder.ControllerTodoItem {
 
     private Context mContext;
-    private ArrayList<String> mTodoList;
+    private List<TodoItemVO> mTodoItemList;
 
     protected SwipeItemRecyclerMangerImpl mItemManger = new SwipeItemRecyclerMangerImpl(this);
 
-    public CourseTodoAdapter(ArrayList<String> objects) {
+    public CourseTodoAdapter(List<TodoItemVO> todoItemList) {
         this.mContext = InteractiveTrainingApp.getContext();
-        this.mTodoList = objects;
+        this.mTodoItemList = todoItemList;
     }
 
     @Override
@@ -45,18 +48,25 @@ public class CourseTodoAdapter extends RecyclerSwipeAdapter<CourseTodoItemViewHo
 
     @Override
     public void onBindViewHolder(final CourseTodoItemViewHolder viewHolder, final int position) {
-        String item = mTodoList.get(position);
+        TodoItemVO item = mTodoItemList.get(position);
         viewHolder.bindData(item, position);
         mItemManger.bindView(viewHolder.itemView, position);
     }
 
-    public String getItem(int position) {
-        return mTodoList.get(position);
+    public TodoItemVO getItem(int position) {
+        return mTodoItemList.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return mTodoList.size();
+        return mTodoItemList.size();
+    }
+
+    public void setNewData(List<TodoItemVO> newList) {
+        if (newList != null) {
+            mTodoItemList = newList;
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -68,18 +78,17 @@ public class CourseTodoAdapter extends RecyclerSwipeAdapter<CourseTodoItemViewHo
     @Override
     public void onTapDelete(int positionOfItem, SwipeLayout deletedLayout) {
         mItemManger.removeShownLayouts(deletedLayout);
-        mTodoList.remove(positionOfItem);
+        mTodoItemList.remove(positionOfItem);
         notifyItemRemoved(positionOfItem);
-        notifyItemRangeChanged(positionOfItem, mTodoList.size());
+        notifyItemRangeChanged(positionOfItem, mTodoItemList.size());
         mItemManger.closeAllItems();
-        // + viewHolder.textViewData.getText().toString() + "!"
-        Toast.makeText(mContext, "Removed 1 item!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "Removed 1 item!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onTapDone(int positionOfItem, SwipeLayout doneLayout) {
         mItemManger.closeAllItems();
-        Toast.makeText(mContext, "Done 1 item!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "Done 1 item!", Toast.LENGTH_SHORT).show();
     }
     //endregion
 }

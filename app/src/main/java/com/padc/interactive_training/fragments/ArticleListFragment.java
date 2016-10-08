@@ -1,24 +1,32 @@
 package com.padc.interactive_training.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.padc.interactive_training.InteractiveTrainingApp;
 import com.padc.interactive_training.R;
 import com.padc.interactive_training.adapters.ArticleAdapter;
+import com.padc.interactive_training.data.models.ArticleModel;
+import com.padc.interactive_training.data.persistence.CoursesContract;
 import com.padc.interactive_training.data.vos.ArticleVO;
-import com.padc.interactive_training.utils.DateTimeUtils;
+import com.padc.interactive_training.utils.InteractiveTrainingConstants;
 import com.padc.interactive_training.views.holders.ArticleViewHolder;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,28 +35,31 @@ import butterknife.ButterKnife;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ArticleListFragment extends Fragment {
-
-    //region variable declaration
-    private View view;
-    private ArticleAdapter articleAdapter;
-    private ArticleViewHolder.ControllerArticleItem controllerArticleItem;
+public class ArticleListFragment extends Fragment implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     @BindView(R.id.rv_articles)
     RecyclerView rvArticle;
 
-
-
-
+    //region variable declaration
+    private View view;
+    private ArticleAdapter mArticleAdapter;
+    private ArticleViewHolder.ControllerArticleItem controllerArticleItem;
     //endregion
-
-    public static ArticleListFragment newInstance(){
-        ArticleListFragment fragment = new ArticleListFragment(); //ALFrag = Article List Fragment
-        return fragment;
-    }
 
     public ArticleListFragment() {
 
+    }
+
+    public static ArticleListFragment newInstance(){
+        ArticleListFragment fragment = new ArticleListFragment();
+        return fragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().getSupportLoaderManager().initLoader(InteractiveTrainingConstants.ARTICLE_LIST_LOADER, null, this);
     }
 
     @Override
@@ -60,8 +71,6 @@ public class ArticleListFragment extends Fragment {
         else{
             throw new RuntimeException(context.toString()+ "must implement ArticleViewHolder.ControllerArticleItem");
         }
-
-
     }
 
     @Override
@@ -71,7 +80,7 @@ public class ArticleListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         bindArticleListData();
-        
+
         return view;
     }
 
@@ -83,8 +92,8 @@ public class ArticleListFragment extends Fragment {
             }
         };
         rvArticle.setLayoutManager(linearLayoutManager);
-        articleAdapter = new ArticleAdapter(prepareSampleArticleList(), getContext(),controllerArticleItem);
-        rvArticle.setAdapter(articleAdapter);
+        mArticleAdapter = new ArticleAdapter(new ArrayList<ArticleVO>(), getContext(), controllerArticleItem);
+        rvArticle.setAdapter(mArticleAdapter);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -98,37 +107,37 @@ public class ArticleListFragment extends Fragment {
                 },3000); // ms
             }
         });
-
-
     }
 
-    public List<ArticleVO> prepareSampleArticleList(){
-        List<ArticleVO> articleList = new ArrayList<>();
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getContext(),
+                CoursesContract.ArticleEntry.CONTENT_URI,
+                null, // projection - {"name", "location"}
+                null, // selection - "region = ? AND popular = ?"
+                null, // selectionArgs - {"upper_myanmar", "very_high"}
+                CoursesContract.ArticleEntry.COLUMN_ARTICLE_ID + " DESC");
+    }
 
-        ArticleVO articleSample1 = new ArticleVO();
-        articleSample1.setTitle("Article Title 1");
-        articleSample1.setBriefDescription(getString(R.string.lorem_ipsum_one_third));
-        articleSample1.setPublishedDate(DateTimeUtils.parseStringToDate("2015-08-21"));
-        articleSample1.setCategoryName("Driving Manual");
-        articleSample1.setImageURL(R.drawable.tech_android_wallpaper);
-        articleList.add(articleSample1);
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        List<ArticleVO> attractionList = new ArrayList<>();
+        if (data != null && data.moveToFirst()) {
+            do {
+                ArticleVO attraction = ArticleVO.parseFromCursor(data);
+                attractionList.add(attraction);
+            } while (data.moveToNext());
+        }
 
-        ArticleVO articleSample2 = new ArticleVO();
-        articleSample2.setTitle("Article Title 2");
-        articleSample2.setBriefDescription(getString(R.string.lorem_ipsum_one_third));
-        articleSample2.setPublishedDate(DateTimeUtils.parseStringToDate("2015-08-21"));
-        articleSample2.setCategoryName("Driving Manual");
-        articleSample2.setImageURL(R.drawable.gento_cow);
-        articleList.add(articleSample2);
+        bindArticleListData();
+        Log.d(InteractiveTrainingApp.TAG, "Retrieved attractions DESC : " + attractionList.size());
+        mArticleAdapter.setNewData(attractionList);
 
-        ArticleVO articleSample3 = new ArticleVO();
-        articleSample3.setTitle("Article Title 3");
-        articleSample3.setBriefDescription(getString(R.string.lorem_ipsum_one_third));
-        articleSample3.setPublishedDate(DateTimeUtils.parseStringToDate("2015-08-21"));
-        articleSample3.setCategoryName("Driving Manual");
-        articleSample3.setImageURL(R.drawable.otto_blue);
-        articleList.add(articleSample3);
+        ArticleModel.getInstance().setStoredArticleData(attractionList);
+    }
 
-        return articleList;
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
     }
 }

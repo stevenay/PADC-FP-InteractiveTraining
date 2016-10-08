@@ -8,11 +8,13 @@
         <item quantity="other">%d mins</item>
     </plurals>
     <plurals name="cards_count">
-        <item quantity="one">%d step</item>
+        <item quantity="one">1 step</item>
         <item quantity="other">%d steps</item>
     </plurals>
 
-    <string name="app_name">PADC-FP-InteractiveTraining</string>
+    <string name="content_authority">com.padc.interactive_training</string>
+
+    <string name="app_name">ThuTa</string>
     <string name="action_settings">Settings</string>
 
     <string name="home_screen_title">ပင္မ စာသင္ခန္း</string>
@@ -22,7 +24,7 @@
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
-    <string name="title_activity_articles">ArticlesActivity</string>
+    <string name="title_activity_articles">Articles</string>
     <string name="title_activity_aricles">AriclesActivity</string>
     <string name="title_activity_">Activity</string>
     <string name="title_activity_my_test">MyTestActivity</string>
@@ -74,6 +76,7 @@
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
     </string>
     <string name="title_activity_article_detail">ArticleDetailActivity</string>
+    <string name="title_activity_outsource_article_detail">Outsource Article</string>
     <!-- Sample Text Finish -->
 
 
@@ -88,5 +91,16 @@
     <!-- Development Package, dir, path, notation start-->
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="txt_multiple_choice">Multiple Choice</string>
+    <string name="past_time">လြန္ခဲ့ေသာ</string>
+    <string name="now_myanmar">ယခုေလးတင္</string>
+    <string name="month_myanmar">လ</string>
+    <string name="day_myanmar">ရက္</string>
+    <string name="hour_myanmar">နာရီ</string>
+    <string name="minute_myanmar">မိနစ္</string>
+    <string name="lbl_bookmark_the_article">Bookmark the Article</string>
+    <string name="action_share">Share the Article</string>
+    <string name="ArticlePreference">ArticleTextSizePref</string>
+    <string name="ArticleTextSizePara">text_size</string>
+    <string name="ContentInDev">Course content still in development state. Please view \'Featured Course this week\' at the top.</string>
     <!-- Development Package, dir, path, notation finish-->
 </resources>

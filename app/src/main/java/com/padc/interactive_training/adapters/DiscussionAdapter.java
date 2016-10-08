@@ -35,17 +35,18 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionViewHolder
 
     @Override
     public void onBindViewHolder(DiscussionViewHolder holder, int position) {
-        // holder.bindData(mDiscussionList.get(position));
+        holder.bindData(mDiscussionList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mDiscussionList.size();
     }
 
     public void setNewData(List<DiscussionVO> newDisucssionList) {
-        mDiscussionList = newDisucssionList;
-        notifyDataSetChanged();
+        if (newDisucssionList != null) {
+            mDiscussionList = newDisucssionList;
+            notifyDataSetChanged();
+        }
     }
-
 }

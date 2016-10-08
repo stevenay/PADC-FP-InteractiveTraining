@@ -68,7 +68,6 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
-                android:foreground="@color/primary"
                 android:src="@drawable/ic_receipt_white_24dp" />
 
             <TextView
@@ -92,6 +91,7 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
             android:layout_gravity="center"
@@ -114,7 +114,7 @@
                     <ImageView
                         android:id="@+id/iv_course_cover_image"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="162dp"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:background="#aed582"
                         android:paddingBottom="32dp"
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/margin_large"
-                    android:text="life style"
+                    android:text="loading category"
                     android:textAllCaps="true"
                     android:textColor="@color/course_background_sample"
                     android:textSize="@dimen/text_small"
@@ -165,12 +165,12 @@
                     android:maxLines="4"
                     android:paddingLeft="@dimen/margin_medium_3"
                     android:paddingRight="@dimen/margin_medium_3"
-                    android:text="UV ေရာင္ျခည္ကို ဘယ္လိုကာကြယ္မလဲ"
+                    android:text="loading course title"
                     android:textColor="@color/primary_text"
                     android:textSize="@dimen/text_heading_1x" />
 
                 <com.padc.interactive_training.components.MMTextView
-                    android:id="@+id/tv_duration"
+                    android:id="@+id/tv_duration_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -178,7 +178,7 @@
                     android:layout_marginTop="@dimen/margin_medium"
                     android:drawableLeft="@drawable/ic_query_builder_24dp"
                     android:drawablePadding="@dimen/margin_small"
-                    android:text="5 min - Admin Team"
+                    android:text="loading duration and author"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/text_small" />
 
@@ -229,9 +229,10 @@
                             android:outAnimation="@anim/slide_out_likes_counter">
 
                             <TextView
+                                android:id="@+id/tv_likes_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="123 likes"
+                                android:text="loading likes"
                                 android:textColor="@color/text_like_counter" />
 
                             <TextView
@@ -246,6 +247,7 @@
 
         </android.support.v7.widget.CardView>
 
+        <!--Trending Now-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -273,6 +275,7 @@
 
         </LinearLayout>
 
+        <!--Technology-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -287,10 +290,9 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
-                android:foreground="@color/primary"
                 android:src="@drawable/ic_receipt_white_24dp" />
 
-            <TextView
+            <com.padc.interactive_training.components.MMTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -465,7 +467,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.padc.interactive_training.components.MMTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -489,7 +491,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_technology_list"
                 android:layout_width="match_parent"
-                android:layout_height="316dp"
+                android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingLeft="@dimen/margin_medium"
                 android:layout_marginBottom="@dimen/margin_small"
@@ -510,10 +512,9 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
-                android:foreground="@color/primary"
                 android:src="@drawable/ic_receipt_white_24dp" />
 
-            <TextView
+            <com.padc.interactive_training.components.MMTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -688,7 +689,7 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.padc.interactive_training.components.MMTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -708,42 +709,16 @@
 
             </LinearLayout>
 
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_cooking_list"
                 android:layout_width="match_parent"
-                android:layout_height="316dp"
-                android:clipToPadding="false"
-                android:paddingLeft="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:layout_marginTop="@dimen/margin_medium" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium_2"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:layout_marginLeft="@dimen/margin_medium_2"
-                android:text="စုစည္းမွုမ်ား"
-                android:textColor="#FF828C9A"
-                android:textSize="@dimen/text_regular_2x" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_collection_list"
-                android:layout_width="match_parent"
-                android:layout_height="316dp"
                 android:clipToPadding="false"
                 android:paddingLeft="@dimen/margin_medium"
                 android:layout_marginBottom="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_medium" />
 
         </LinearLayout>
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -11,15 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/margin_medium_2"
-        android:paddingRight="@dimen/margin_medium"
-        android:paddingLeft="@dimen/margin_medium"
-        android:paddingTop="@dimen/margin_medium"
+        android:background="@color/text_white_ish"
         />
-
-
-
-
-
 
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -58,9 +58,6 @@ public class HomeActivity extends AppCompatActivity
     @BindView(R.id.content)
     CoordinatorLayout clContent;
 
-    @BindView(R.id.fab_search)
-    FloatingActionButton fabSearch;
-
     @BindView(R.id.tv_screen_title)
     TextView tvScreenTitle;
 
@@ -117,20 +114,9 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void prepareIntroAnimation() {
-        fabSearch.setTranslationY(2 * getResources().getDimensionPixelOffset(R.dimen.btn_fab_size));
         toolbar.setTranslationY(-ACTION_BAR_SIZE);
         tvScreenTitle.setTranslationY(-ACTION_BAR_SIZE);
     }
-
-//    private void showFeedLoadingItemDelayed() {
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                rvMyCourse.smoothScrollToPosition(0);
-//                myCourseAdapter.showLoadingView();
-//            }
-//        }, 500);
-//    }
 
     private void startIntroAnimation() {
 
@@ -158,13 +144,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void startContentAnimation() {
-        fabSearch.animate()
-                .translationY(0)
-                .setInterpolator(new OvershootInterpolator(1.f))
-                .setStartDelay(300)
-                .setDuration(ANIM_DURATION_FAB)
-                .start();
-
         navigateToFeaturedCourseListFragment(true);
     }
 
@@ -265,7 +244,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        fabSearch.setVisibility(View.VISIBLE);
         switch (item.getItemId()) {
             case R.id.nav_featured_course:
                 navigateToFeaturedCourseListFragment(false);
@@ -302,11 +280,11 @@ public class HomeActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_up_fragment, R.anim.slide_up_out_fragment)
                     .replace(R.id.fl_container, FeaturedCourseListFragment.newInstance())
-                    .commit();
+                    .commitAllowingStateLoss();
         else
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, FeaturedCourseListFragment.newInstance())
-                    .commit();
+                    .commitAllowingStateLoss();
     }
 
     //endregion

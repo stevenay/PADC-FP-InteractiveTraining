@@ -1,62 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_small"
-    card_view:cardElevation="@dimen/card_elevation"
-    card_view:cardUseCompatPadding="true"
-    >
+    android:layout_marginBottom="1dp"
+    card_view:cardElevation="0dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
-        android:padding="@dimen/margin_medium"
-        android:orientation="vertical"
-        android:background="@color/card_background"
-        >
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/iv_article"
-            android:layout_width="match_parent"
-            android:layout_height="128dp"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_width="128dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/otto_blue"
-            />
-        <com.padc.interactive_training.components.MMTextView
-            android:id="@+id/tv_article_title"
-            android:layout_width="wrap_content"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/iv_category_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="top"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_computer_64" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium_2"
-            android:text="ဂိုဂလ္း အလိုေလ်ာက္ေမာင္းေသာ ကား"
-            style="@style/cardViewTitle"
-            />
-        <com.padc.interactive_training.components.MMTextView
+            android:padding="@dimen/margin_medium"
+            android:orientation="vertical">
+
+            <TextView
                 android:id="@+id/tv_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:text="ေမာ္ေတာ္ယာဥ္"/>
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="@dimen/text_small"
+                android:textAllCaps="true"
+                android:textColor="#00aaad"
+                android:textStyle="bold"
+                android:text="Technology" />
 
-        <com.padc.interactive_training.components.MMTextView
-                android:id="@+id/tv_published_date"
-                android:layout_marginTop="@dimen/margin_minus_medium_2"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="12th, Aug, 2015"/>
-        <com.padc.interactive_training.components.MMTextView
+                android:layout_marginTop="@dimen/margin_small"
+                android:orientation="horizontal">
+
+                <com.padc.interactive_training.components.MMTextView
+                    android:id="@+id/tv_article_title"
+                    style="@style/cardViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_medium"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:lineSpacingMultiplier="1"
+                    android:text="Google Auto Mobile"
+                    android:textSize="@dimen/text_regular_2.5x"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_article_title"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:orientation="horizontal">
+
+                    <com.padc.interactive_training.components.MMTextView
+                        android:id="@+id/tv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:textSize="@dimen/text_small"
+                        android:text="Author: ထူးေမာင္သစ္ ," />
+
+                    <com.padc.interactive_training.components.MMTextView
+                        android:id="@+id/tv_published_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:textSize="@dimen/text_small"
+                        android:text="12th, Aug, 2015" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <com.padc.interactive_training.components.MMTextView
                 android:id="@+id/tv_article_brief_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/lorem_ipsum_one_third"/>
+                android:layout_marginLeft="@dimen/margin_medium"
+                android:layout_marginRight="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:visibility="gone"
+                android:text="@string/lorem_ipsum_one_third" />
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/margin_medium">-->
+
+                <!--<ImageButton-->
+                    <!--android:id="@+id/btn_pin"-->
+                    <!--android:layout_width="24dp"-->
+                    <!--android:layout_height="24dp"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginBottom="12dp"-->
+                    <!--android:background="@color/transparent"-->
+                    <!--android:scaleType="fitCenter"-->
+                    <!--android:src="@drawable/ic_bookmark_border_24dp" />-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/margin_small"-->
+                    <!--android:gravity="center_vertical|right">-->
+
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:src="@drawable/ic_heart_small_blue" />-->
+
+                    <!--<TextSwitcher-->
+                        <!--android:id="@+id/tsLikesCounter"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="8dp"-->
+                        <!--android:layout_marginRight="8dp"-->
+                        <!--android:inAnimation="@anim/slide_in_likes_counter"-->
+                        <!--android:outAnimation="@anim/slide_out_likes_counter">-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="123 likes"-->
+                            <!--android:textColor="@color/text_like_counter" />-->
+
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textColor="@color/text_like_counter" />-->
+                    <!--</TextSwitcher>-->
+                <!--</LinearLayout>-->
+
+            <!--</RelativeLayout>-->
 
 
-
+        </LinearLayout>
 
     </LinearLayout>
 

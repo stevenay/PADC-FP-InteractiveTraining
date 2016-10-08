@@ -1,17 +1,24 @@
 package com.padc.interactive_training.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
 import android.transition.Fade;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,6 +29,8 @@ import com.padc.interactive_training.R;
 import com.padc.interactive_training.adapters.CourseHeaderPagerAdapter;
 import com.padc.interactive_training.adapters.CoursePagerAdapter;
 import com.padc.interactive_training.components.PageIndicatorView;
+import com.padc.interactive_training.data.models.CourseModel;
+import com.padc.interactive_training.data.persistence.CoursesContract;
 import com.padc.interactive_training.data.vos.ChapterVO;
 import com.padc.interactive_training.data.vos.CourseVO;
 import com.padc.interactive_training.data.vos.DiscussionVO;
@@ -42,7 +51,11 @@ import butterknife.OnClick;
 
 public class RegisteredCourseDetailActivity extends AppCompatActivity
         implements ChapterViewHolder.ControllerChapterItem,
-        DiscussionViewHolder.ControllerDiscussionItem {
+        DiscussionViewHolder.ControllerDiscussionItem,
+        LoaderManager.LoaderCallbacks<Cursor> {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -68,14 +81,28 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
     @BindView(R.id.pi_course_header_pager)
     PageIndicatorView piCourseHeaderPager;
 
-    private static final String IE_COURSE_NAME = "IE_COURSE_NAME";
+    protected static final int RC_COURSE_FLOW = 1236;
+    private static final String IE_COURSE_TITLE = "IE_COURSE_TITLE";
 
     private CoursePagerAdapter mCoursePagerAdapter;
+    private String mCourseTitle;
+    private CourseVO mCourse;
+    private ChapterListFragment chapterListFragment;
 
-    public static Intent newIntent(String courseName) {
+    public static Intent newIntent(String courseTitle) {
         Intent intent = new Intent(InteractiveTrainingApp.getContext(), RegisteredCourseDetailActivity.class);
-        intent.putExtra(IE_COURSE_NAME, courseName);
+        intent.putExtra(IE_COURSE_TITLE, courseTitle);
         return intent;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_COURSE_FLOW) {
+            if (CourseModel.getInstance().getChapterListData() != null && chapterListFragment != null && chapterListFragment.chapterAdapter != null)
+                chapterListFragment.chapterAdapter.setNewData(CourseModel.getInstance().getChapterListData());
+        }
     }
 
     @Override
@@ -85,13 +112,21 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         setupWindowAnimations();
 
         ButterKnife.bind(this, this);
-        bindData(prepareSampleCourseVO());
 
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        mCourseTitle = getIntent().getStringExtra(IE_COURSE_TITLE);
         mCoursePagerAdapter = new CoursePagerAdapter(getSupportFragmentManager());
 
-        mCoursePagerAdapter.addTab(ChapterListFragment.newInstance(), "CHAPTERS");
-        mCoursePagerAdapter.addTab(DiscussionListFragment.newInstance(), "DISCUSSION");
-        mCoursePagerAdapter.addTab(CourseTodoListFragment.newInstance(), "TODO-List (3)");
+        chapterListFragment = ChapterListFragment.newInstance(mCourseTitle);
+        mCoursePagerAdapter.addTab(chapterListFragment, "CHAPTERS");
+        mCoursePagerAdapter.addTab(DiscussionListFragment.newInstance(mCourseTitle), "DISCUSSION");
+        mCoursePagerAdapter.addTab(CourseTodoListFragment.newInstance(mCourseTitle), "TODO-List (1)");
 
         pagerNavigations.setAdapter(mCoursePagerAdapter);
         pagerNavigations.setOffscreenPageLimit(mCoursePagerAdapter.getCount());
@@ -128,6 +163,27 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
             }
         });
+
+        collapsingToolbar.setTitle(" ");
+        getSupportLoaderManager().initLoader(InteractiveTrainingConstants.COURSE_DETAIL_LOADER, null, this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
     private void setupWindowAnimations() {
@@ -169,11 +225,11 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         piCourseHeaderPager.setNumPage(2);
 
         CourseHeaderPagerAdapter pagerAdapter = new CourseHeaderPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addTab(CourseInfoHeaderFragment.newInstance(), "CourseInfo");
+        pagerAdapter.addTab(CourseInfoHeaderFragment.newInstance(mCourse.getTitle(), mCourse.getCoverPhotoUrl()), "CourseInfo");
         pagerAdapter.addTab(CourseProgressHeaderFragment.newInstance(), "CourseProgress");
 
         pageCourseHeader.setAdapter(pagerAdapter);
-        pageCourseHeader.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        pageCourseHeader.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -192,30 +248,51 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
 
     }
 
-    @OnClick(R.id.fab_play_course)
-    public void onClickFabPlayCourse(View view) {
-        this.navigateToCourseFlow();
+    //region LoaderPattern
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(this,
+                CoursesContract.CourseEntry.buildCourseUriWithTitle(mCourseTitle),
+                null,
+                null,
+                null,
+                null
+        );
     }
 
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data != null && data.moveToFirst()) {
+            mCourse = CourseVO.parseFromCursor(data);
+            bindData(mCourse);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+    //endregion
+
+    //region ClickEvents
+    @OnClick(R.id.fab_play_course)
+    public void onClickFabPlayCourse(View view) {
+        this.navigateToCourseFlow(mCourseTitle, "", CourseModel.getInstance().getLastAccessCardIndex());
+    }
 
     @OnClick(R.id.fab_add_discussion)
     public void onClickFabAddDiscussion(View view) {
         navigateToNewDiscussion(1); // need to pass Course ID
     }
-
-    private CourseVO prepareSampleCourseVO() {
-        CourseVO courseVO = new CourseVO();
-        courseVO.setTitle("UV ေရာင္ျခည္ကို ဘယ္လိုကာကြယ္မလဲ");
-        return courseVO;
-    }
+    //endregion
 
     //region NavigationMethods
-    private void navigateToCourseFlow() {
-        Intent intent = CourseFlowActivity.newIntent("SampleCourseID");
+    private void navigateToCourseFlow(String courseTitle, String chapterId, int lastAccessCard) {
+        Intent intent = CourseFlowActivity.newIntent(courseTitle, chapterId, lastAccessCard);
 
         final Pair<View, String>[] pairs = TransitionHelper.createSafeTransitionParticipants(this, true);
         ActivityOptionsCompat transitionActivityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs);
-        startActivity(intent);
+        startActivityForResult(intent, RC_COURSE_FLOW);
     }
 
     private void navigateToNewDiscussion(Integer courseID)
@@ -223,11 +300,21 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
         Intent intent = NewDiscussionActivity.newIntent(courseID);
         startActivity(intent);
     }
+
+    private void navigateToDiscussionDetail(String discussionId) {
+        Intent intent = DiscussionDetailActivity.newIntent(discussionId);
+        startActivity(intent);
+    }
     //endregion
 
     //region ChapterController
     @Override
     public void onTapChapter(ChapterVO chapter) {
+        if (!chapter.isLocked())
+            navigateToCourseFlow(mCourse.getTitle(), chapter.getChapterId(), -1);
+        else {
+            Toast.makeText(getApplicationContext(), "ေရွ႕မွ အခန္းမ်ားကို အရင္ၿပီးေအာင္ ဖတ္ေပးပါ။", Toast.LENGTH_SHORT).show();
+        }
 
     }
     //endregion
@@ -235,8 +322,7 @@ public class RegisteredCourseDetailActivity extends AppCompatActivity
     //region DiscussionController
     @Override
     public void onTapDiscussion(DiscussionVO discussion) {
-        Intent intent = DiscussionDetailActivity.newIntent("Sample Disucssion ID");
-        startActivity(intent);
+        navigateToDiscussionDetail(discussion.getDiscussionId());
     }
 
     @Override

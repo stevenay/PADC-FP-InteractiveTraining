@@ -8,6 +8,8 @@ public class InteractiveTrainingConstants {
 
     public static final String COURSE_BASE_URL = "http://www.aungpyaephyo.xyz/padc-fp/interactive-trainings/";
     public static final String API_GET_COURSE_LIST = "GetCourses.php";
+    public static final String API_GET_USER_LIST = "GetUsers.php";
+    public static final String API_GET_ARTICLE_LIST = "GetArticles.php";
     public static final String API_REGISTER = "register.php";
     public static final String API_REGISTER_WITH_FACEBOOK = "registerWithFacebook.php";
     public static final String API_REGISTER_WITH_GOOGLE = "registerWithGoogle.php";
@@ -30,10 +32,15 @@ public class InteractiveTrainingConstants {
     public static final String ACCESS_TOKEN = "b002c7e1a528b7cb460933fc2875e916";
 
     //Loader ID
-    public static final int ATTRACTION_LIST_LOADER = 1;
-    public static final int ATTRACTION_DETAIL_LOADER = 2;
-    public static final int ATTRACTION_LIST_LOADER_LISTVIEW = 3;
-    public static final int ATTRACTION_LIST_LOADER_GRIDVIEW = 4;
+    public static final int COURSE_LIST_LOADER = 1;
+    public static final int COURSE_DETAIL_LOADER = 2;
+    public static final int CHAPTER_LIST_LOADER = 3;
+    public static final int COURSE_FLOW_LOADER = 4;
+    public static final int DISCUSSION_LIST_LOADER = 5;
+    public static final int REPLY_LIST_LOADER = 6;
+    public static final int TODO_LIST_LOADER = 7;
+    public static final int ARTICLE_LIST_LOADER = 8;
+    public static final int ARTICLE_DETAIL_LOADER = 9;
 
     //Regular Expression for checking email.
     public static final String EMAIL_PATTERN = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
@@ -46,7 +53,4 @@ public class InteractiveTrainingConstants {
     public static final String CUSTOMER_SUPPORT_EMAIL = "customer-support@myanmarattractions.com";
 
     public static final int DIALOG_BUTTON_LABEL_LIMIT = 15;
-
-    public static final String SWITCH_TAB = "switch_tab";
-    public static final String TAB_DISCUSSION = "tab_discussion";
 }
